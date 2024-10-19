@@ -3,7 +3,6 @@ from amadeus import Client, Location, ResponseError
 import requests
 import os, json, csv
 
-import requests
 def get_airport_code(city_name):
     amadeus = Client(
         client_id='fIZvU3nGGUfVBNYkKKZMXAkMUuju6K66',
@@ -35,6 +34,31 @@ def get_flight_data(origin, endpoint, departure, arrival):
     'outbound_date' : departure,
     'return_date' : arrival
     }
-    return GoogleSearch(params).get_dict()['best_flights']#[0]['price']
-
-print(get_flight_data('new york', 'paris', '2024-10-20', '2024-10-25'))
+    best_flights = GoogleSearch(params).get_dict()['best_flights']
+    flights = {}
+    for i in range(len(best_flights)):
+        params = {
+        'engine' : "google_flights",
+        'departure_id' : origin,
+        'arrival_id': endpoint,
+        'outbound_date': departure,
+        'return_date': arrival,
+        'currency': "USD",
+        'hl': "en",
+        'booking_token': best_flights[i]['departure_token'],
+        'api_key': "2042f1270c13df5555808466cd31ba26f137362658fa1c8a982eb50cf31a3073"
+        }
+        link = GoogleSearch(params).get_dict()
+        flights['flight' + str(i+1)] = {
+        'departure_airport' : best_flights[i]['flights'][0]['departure_airport']['name'],
+        'arrival_airport' : best_flights[i]['flights'][0]['arrival_airport']['name'],
+        'departure_time'  : best_flights[i]['flights'][0]['departure_airport']['time'],
+        'arrival_time' : best_flights[i]['flights'][0]['arrival_airport']['time'],
+        'flight_duration' : best_flights[i]['flights'][0]['duration'],
+        'airline_name' : best_flights[i]['flights'][0]['airline'],
+        'airline_logo' : best_flights[i]['flights'][0]['airline_logo'],
+        'price' : best_flights[i]['price'],
+        'flight_link' : link['search_metadata']['google_flights_url']
+        }
+    return flights
+      
