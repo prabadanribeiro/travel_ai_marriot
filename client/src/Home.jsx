@@ -63,11 +63,13 @@ export default function Home() {
     // Format the dates in "YYYY-MM-DD" format
     const formattedStartingDate = startingDate.toISOString().slice(0, 10);
     const formattedEndingDate = endingDate.toISOString().slice(0, 10);
+    const formattedStartingCity = selectedStartCity.name;
+    const formattedEndCity = selectedEndCity.name;
 
     try {
       const response = await axios.post('http://127.0.0.1:5000/cities-dates', {
-        startCity: selectedStartCity,
-        endCity: selectedEndCity,
+        startCity: formattedStartingCity,
+        endCity: formattedEndCity,
         startingDate: formattedStartingDate,
         endingDate: formattedEndingDate,
       });
