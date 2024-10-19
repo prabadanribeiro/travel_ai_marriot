@@ -3,15 +3,20 @@ import axios from 'axios';
 import './styles/Cities.css';
 
 const Cities = ({ onCitiesSelect }) => {
-  const [inputStart, setInputStart] = useState(''); // Input for starting point
-  const [inputEnd, setInputEnd] = useState(''); // Input for end point
-  const [citiesStart, setCitiesStart] = useState([]); // Cities list for starting point suggestions
-  const [citiesEnd, setCitiesEnd] = useState([]); // Cities list for end point suggestions
-  const [loadingStart, setLoadingStart] = useState(false); // Loading state for starting point
-  const [loadingEnd, setLoadingEnd] = useState(false); // Loading state for end point
-  const [selectedStartCity, setSelectedStartCity] = useState(null); // Store selected start city
-  const [selectedEndCity, setSelectedEndCity] = useState(null); // Store selected end city
-  const [accessToken, setAccessToken] = useState(''); // Store the access token
+  const [inputStart, setInputStart] = useState(''); 
+  const [inputEnd, setInputEnd] = useState(''); 
+  const [citiesStart, setCitiesStart] = useState([]); 
+  const [citiesEnd, setCitiesEnd] = useState([]); 
+  const [loadingStart, setLoadingStart] = useState(false);
+  const [loadingEnd, setLoadingEnd] = useState(false); 
+  const [selectedStartCity, setSelectedStartCity] = useState(null);
+  const [selectedEndCity, setSelectedEndCity] = useState(null);
+  const [accessToken, setAccessToken] = useState('');
+
+  // Fetch access token when the component mounts
+  useEffect(() => {
+    fetchAccessToken();
+  }, []);
 
   // Fetch access token from Amadeus API
   const fetchAccessToken = async () => {
@@ -29,7 +34,7 @@ const Cities = ({ onCitiesSelect }) => {
           },
         }
       );
-      setAccessToken(response.data.access_token); // Store the access token
+      setAccessToken(response.data.access_token);
     } catch (error) {
       console.error('Error fetching access token:', error);
     }
@@ -37,7 +42,7 @@ const Cities = ({ onCitiesSelect }) => {
 
   // Fetch cities from Amadeus API for starting point
   const fetchCitiesStart = async (query) => {
-    if (!accessToken) return; // Ensure access token is available
+    if (!accessToken) return; 
     setLoadingStart(true);
     try {
       const response = await axios.get(
@@ -62,7 +67,7 @@ const Cities = ({ onCitiesSelect }) => {
 
   // Fetch cities from Amadeus API for end point
   const fetchCitiesEnd = async (query) => {
-    if (!accessToken) return; // Ensure access token is available
+    if (!accessToken) return;
     setLoadingEnd(true);
     try {
       const response = await axios.get(
@@ -77,7 +82,7 @@ const Cities = ({ onCitiesSelect }) => {
           },
         }
       );
-      setCitiesEnd(response.data.data); // Set the city list for end point
+      setCitiesEnd(response.data.data);
     } catch (error) {
       console.error('Error fetching cities for end:', error);
     } finally {
@@ -123,34 +128,30 @@ const Cities = ({ onCitiesSelect }) => {
 
   // Handle city selection for starting point
   const handleStartCitySelect = (city) => {
-    setSelectedStartCity(city); // Set the selected start city when user clicks on a city
-    setInputStart(city.name); // Display the selected start city name in the input
-    setCitiesStart([]); // Clear the cities list after selection
+    setSelectedStartCity(city); 
+    setInputStart(city.name); 
+    setCitiesStart([]); 
     if (city && selectedEndCity) {
-      onCitiesSelect(city, selectedEndCity); // Send both cities to Home.jsx when both are selected
+      onCitiesSelect(city, selectedEndCity);
     }
   };
 
   // Handle city selection for end point
   const handleEndCitySelect = (city) => {
-    setSelectedEndCity(city); // Set the selected end city when user clicks on a city
-    setInputEnd(city.name); // Display the selected end city name in the input
-    setCitiesEnd([]); // Clear the cities list after selection
+    setSelectedEndCity(city);
+    setInputEnd(city.name);
+    setCitiesEnd([]); 
     if (selectedStartCity && city) {
-      onCitiesSelect(selectedStartCity, city); // Send both cities to Home.jsx when both are selected
+      onCitiesSelect(selectedStartCity, city); 
     }
   };
-
-  // Fetch access token when the component mounts
-  useEffect(() => {
-    fetchAccessToken();
-  }, []);
 
   return (
     <>
       <div className='cities-container'>
         <div className='city-search-container'>
           <h3>Starting Point</h3>
+          {/* {Input for starting city} */}
           <input
             type="text"
             value={inputStart}
@@ -159,6 +160,7 @@ const Cities = ({ onCitiesSelect }) => {
           />
           <div className='cities-list'>
             {loadingStart && <p>Loading...</p>}
+            {/* {displays list of starting cities} */}
             <ul>
               {citiesStart.map((city) => (
                 <li
@@ -172,9 +174,9 @@ const Cities = ({ onCitiesSelect }) => {
             </ul>
           </div>
         </div>
-
         <div className='city-search-container'>
           <h3>End Point</h3>
+          {/* {input for end cities} */}
           <input
             type="text"
             value={inputEnd}
@@ -183,6 +185,7 @@ const Cities = ({ onCitiesSelect }) => {
           />
           <div className='cities-list'>
             {loadingEnd && <p>Loading...</p>}
+            {/* {list for end cities} */}
             <ul>
               {citiesEnd.map((city) => (
                 <li

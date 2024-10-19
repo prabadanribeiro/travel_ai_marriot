@@ -16,9 +16,9 @@ def cities_dates():
 
     # Add logic here if needed to process the data
 
+
     # Return a success message with the received data
     return jsonify({
-        'message': 'Cities and dates received successfully',
         'startCity': start_city,
         'endCity': end_city,
         'startingDate': starting_date,
