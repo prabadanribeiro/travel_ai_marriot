@@ -1,0 +1,111 @@
+  .flights-page-container {
+    padding: 100px;
+  }
+  
+  .back-arrow-skip-container {
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid black;
+  }
+  
+  .back-arrow-container {
+    height: 100%;
+    width: 80px;
+    border: 1px solid blue;
+  }
+
+  .back-arrow-container img {
+    height: 100%;
+    width: 100%;
+  }
+
+  .skip-button {
+    height: 70px;
+    width: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: orange;
+    border-radius: 8px;
+    border: 1px solid red;
+  }
+
+  .homepage-info-container {
+    width: 100%;
+    height: 125px;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  
+
+  .flights-list-container {
+    width: 100%;
+    height: 500px;
+    border: 1px solid black;
+    padding: 30px;
+    box-sizing: border-box;
+  }
+  
+
+  .flights-text-hr h1 {
+    font-size: 60px;
+  }
+  
+  .flights-text-hr hr {
+    border: 2px solid black;
+    margin: 10px 0 10px 
+  }
+
+
+
+  .flight-container {
+    width: 100%;
+    height: 300px;
+    border: 3px solid green;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-sizing: border-box;
+    padding: 0 100px 0 100px;
+  }
+
+  .flight-container-image-company {
+    width: 180px;
+    height: 216px;
+    border: 1px solid green;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .flight-container-image {
+    width: 100%;
+    height: 80%;
+    border: 1px solid purple;
+  }
+  
+  .flight-container-company {
+    width: 100%;
+    height: 20%;
+    border: 1px solid yellow;
+  }
+
+  .flight-container-information {
+    width: 750px;
+    height: 216px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    border: 1px solid purple;
+  }
+
+  .flight-container-information-box {
+    width: 100%;
+    height: 100%;
+    border: 1px solid red;
+  }
