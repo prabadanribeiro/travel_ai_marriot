@@ -2,6 +2,7 @@ import React from 'react';
 import { createBrowserRouter, Outlet } from 'react-router-dom';
 import Home from './Home';
 import Flights from './Flights';
+import Hotels from './Hotels';
 
 const Root = () => {
   return (
@@ -24,7 +25,11 @@ export const createRouter = () => {
         {
           path: "/flights",
           element: <Flights />
-        }
+        },
+        {
+          path: "/hotels",
+          element: <Hotels />
+        },
       ]
     }
   ]);
