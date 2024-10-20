@@ -11,7 +11,7 @@ def get_hotel_data(city_name, check_in_date, check_out_date):
     "currency": "USD",
     "gl": "us",
     "hl": "en",
-    "api_key": "2042f1270c13df5555808466cd31ba26f137362658fa1c8a982eb50cf31a3073"
+    "api_key": "c141450bc8fca73781cc5ba783d313968e6e3eb8479fa81428a2b761a7a25e68"
     }
     search = GoogleSearch(params)
     hotel_list = search.get_dict()['properties']
