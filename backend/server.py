@@ -18,14 +18,16 @@ def cities_dates():
 
     start_city = data.get('startCity')
     end_city = data.get('endCity')
+    end_country = data.get('endCountry')
     starting_date = data.get('startingDate')
     ending_date = data.get('endingDate')
+    
     flights = get_flight_data(start_city, end_city, starting_date, ending_date)
-
 
     return jsonify({
         'startCity': start_city,
         'endCity': end_city,
+        'endCountry': end_country,
         'startingDate': starting_date,
         'endingDate': ending_date,
         'flights': flights,
@@ -34,6 +36,7 @@ def cities_dates():
 @app.route('/get-hotels', methods=['GET'])
 def get_hotels():
     city = request.args.get('city')
+    country = request.args.get('country')
     check_in = request.args.get('check_in')
     check_out = request.args.get('check_out')
 
@@ -41,7 +44,7 @@ def get_hotels():
         return jsonify({"error": "Missing required parameters"}), 400
 
     # Call the hotel data fetching function
-    hotels = get_hotel_data(city, check_in, check_out)
+    hotels = get_hotel_data(city, country, check_in, check_out)
 
     return jsonify(hotels), 200
 

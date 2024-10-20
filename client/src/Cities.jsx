@@ -129,9 +129,14 @@ const Cities = ({ onCitiesSelect }) => {
   const handleEndCitySelect = (city) => {
     setSelectedEndCity(city);
     setInputEnd(city.name);
-    setCitiesEnd([]); 
+    setCitiesEnd([]);
+    
     if (selectedStartCity && city) {
-      onCitiesSelect(selectedStartCity, city); 
+      // Pass the selected end city and its country separately to Home.jsx
+      onCitiesSelect(
+        { name: selectedStartCity.name, country: selectedStartCity.address.countryName },
+        { name: city.name, country: city.address.countryName }
+      );
     }
   };
 

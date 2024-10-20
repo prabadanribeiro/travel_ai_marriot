@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import Cities from './Cities';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css';
 import './styles/Home.css';
 import backgroundImage1 from '../src/assets/images/home-backgrounds/background-image1.jpeg';
@@ -22,7 +22,7 @@ export default function Home() {
   const [currentBackground, setCurrentBackground] = useState(0);
   const [fade, setFade] = useState(true);
 
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   // Array of background image URLs
   const backgroundImages = [
@@ -68,26 +68,28 @@ export default function Home() {
       console.error('Both cities and both dates must be selected.');
       return;
     }
-
+  
     const formattedStartingDate = startingDate.toISOString().slice(0, 10);
     const formattedEndingDate = endingDate.toISOString().slice(0, 10);
-    const formattedStartingCity = selectedStartCity.name;
-    const formattedEndCity = selectedEndCity.name;
-
+  
     try {
+      // Pass endCity and endCountry separately to Flask
       const response = await axios.post('http://127.0.0.1:5000/cities-dates', {
-        startCity: formattedStartingCity,
-        endCity: formattedEndCity,
+        startCity: selectedStartCity.name,
+        startCountry: selectedStartCity.country,
+        endCity: selectedEndCity.name,
+        endCountry: selectedEndCity.country, // <-- pass the end country
         startingDate: formattedStartingDate,
         endingDate: formattedEndingDate,
       });
-
+  
       console.log('Cities and dates sent to Flask:', response.data);
-
+  
       navigate('/flights', {
         state: {
           startCity: response.data.startCity,
           endCity: response.data.endCity,
+          endCountry: response.data.endCountry,
           startingDate: response.data.startingDate,
           endingDate: response.data.endingDate,
           flights: response.data.flights,
@@ -131,27 +133,27 @@ export default function Home() {
           <h1>Begin Your Travel Journey</h1>
         </div>
         <div className='action-container'>
-          <div className="flight-search-bar">  
-            <div className="location-field">  
-              <Cities onCitiesSelect={onCitiesSelect} /> 
-            </div>  
-            <div className="date-field" onClick={calendarStarting}>  
+          <div className="flight-search-bar">
+            <div className="location-field">
+              <Cities onCitiesSelect={onCitiesSelect} />
+            </div>
+            <div className="date-field" onClick={calendarStarting}>
               <input
                 type="text"
                 value={startingDate ? startingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}
-                placeholder="From?" 
-                readOnly 
+                placeholder="From?"
+                readOnly
               />
-            </div>  
-            <div className="date-field" onClick={calendarEnding}>  
+            </div>
+            <div className="date-field" onClick={calendarEnding}>
               <input
                 type="text"
                 value={endingDate ? endingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}
-                placeholder="To?" 
-                readOnly 
+                placeholder="To?"
+                readOnly
               />
-            </div>  
-            <button className="find-deals-btn" onClick={handleSendCities}><strong>Find Deals</strong></button>  
+            </div>
+            <button className="find-deals-btn" onClick={handleSendCities}><strong>Find Deals</strong></button>
           </div>
 
           {calendarVisibility && (
@@ -161,7 +163,6 @@ export default function Home() {
           )}
         </div>
       </div>
-      
     </>
   );
 }
