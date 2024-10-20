@@ -63,5 +63,6 @@ def get_flight_data(origin, endpoint, departure, arrival):
         'price' : best_flights[i]['price'],
         'flight_link' : link['search_metadata']['google_flights_url']
         }
+        
     return flights #returns a dictionary with the above information#
       

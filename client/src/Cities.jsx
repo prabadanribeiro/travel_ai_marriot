@@ -149,57 +149,64 @@ const Cities = ({ onCitiesSelect }) => {
   return (
     <>
       <div className='cities-container'>
-        <div className='city-search-container'>
-          <h3>Starting Point</h3>
-          {/* {Input for starting city} */}
-          <input
-            type="text"
-            value={inputStart}
-            onChange={handleInputStartChange}
-            placeholder="Enter a starting city"
-          />
-          <div className='cities-list'>
-            {loadingStart && <p>Loading...</p>}
-            {/* {displays list of starting cities} */}
-            <ul>
-              {citiesStart.map((city) => (
-                <li
-                  key={city.id}
-                  onClick={() => handleStartCitySelect(city)}
-                  className="city-item"
-                >
-                  {city.name}, {city.address.countryName}
-                </li>
-              ))}
-            </ul>
+        <div className='destination-text'>
+          <h4>Starting Point</h4>
+          <div className='city-search-container'>
+            <div className='input-container'>
+              <input
+                type="text"
+                value={inputStart}
+                onChange={handleInputStartChange}
+                placeholder="Enter a Starting City"
+              />
+            </div>
+            <div className='cities-list'>
+              {loadingStart && <p>Loading...</p>}
+              <ul>
+                {citiesStart.map((city) => (
+                  <li
+                    key={city.id}
+                    onClick={() => handleStartCitySelect(city)}
+                    className="city-item"
+                  >
+                    {city.name}, {city.address.countryName}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
-        <div className='city-search-container'>
-          <h3>End Point</h3>
-          {/* {input for end cities} */}
-          <input
-            type="text"
-            value={inputEnd}
-            onChange={handleInputEndChange}
-            placeholder="Enter an end city"
-          />
-          <div className='cities-list'>
-            {loadingEnd && <p>Loading...</p>}
-            {/* {list for end cities} */}
-            <ul>
-              {citiesEnd.map((city) => (
-                <li
-                  key={city.id}
-                  onClick={() => handleEndCitySelect(city)}
-                  className="city-item"
-                >
-                  {city.name}, {city.address.countryName}
-                </li>
-              ))}
-            </ul>
+    
+        <div className='destination-text'>
+          <h4>Destination</h4>
+          <div className='city-search-container'>
+            {/* Input for end city */}
+            <div className='input-container'>
+              <input
+                type="text"
+                value={inputEnd}
+                onChange={handleInputEndChange}
+                placeholder="Enter an End City"
+              />
+            </div>
+            <div className='cities-list'>
+              {loadingEnd && <p>Loading...</p>}
+              <ul>
+                {citiesEnd.map((city) => (
+                  <li
+                    key={city.id}
+                    onClick={() => handleEndCitySelect(city)}
+                    className="city-item"
+                  >
+                    {city.name}, {city.address.countryName}
+                  </li>
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>
+        
     </>
   );
 };

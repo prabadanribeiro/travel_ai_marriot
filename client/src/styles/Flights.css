@@ -1,20 +1,33 @@
+
   .flights-page-container {
     padding: 100px;
+    z-index: 1; 
+    position: relative; 
+    font-family: 'Poppins', sans-serif;
+    background-color: transparent;
+    box-sizing: border-box;
+  }
+  
+  .back-arrow-skip-container, .homepage-info-container, .flights-list-container {
+    background-color: black; 
+    z-index: 2;
+    position: relative;
+    color: white;
+    box-sizing: border-box;
   }
   
   .back-arrow-skip-container {
-    height: 80px;
+    height: 120px;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border: 1px solid black;
   }
   
   .back-arrow-container {
-    height: 100%;
-    width: 80px;
-    border: 1px solid blue;
+    height: 45%;
+    width: 50px;
+    margin-left: 30px;
   }
 
   .back-arrow-container img {
@@ -23,62 +36,83 @@
   }
 
   .skip-button {
-    height: 70px;
-    width: 210px;
+    height: 45%;
+    width: 180px;
     display: flex;
     justify-content: center;
     align-items: center;
     background-color: orange;
-    border-radius: 8px;
-    border: 1px solid red;
+    border: 2px solid white;
+    text-decoration: none;
+    border-radius: 12px;
+    margin-right: 30px;
+  }
+
+  .skip-button a {
+    text-decoration: none; /* Ensure the underline is removed from the link */
+  }
+
+  .skip-button h1 {
+    font-size: 20px;
+    color: white;
   }
 
   .homepage-info-container {
     width: 100%;
-    height: 125px;
-    border: 1px solid black;
+    min-height: 125px;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0 70px 0 70px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-start;
+    line-height: 1.1;
   }
-
-  
 
   .flights-list-container {
     width: 100%;
-    height: 500px;
+    min-height: 600px;
     border: 1px solid black;
-    padding: 30px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
     box-sizing: border-box;
+    align-items: center;
+    justify-content: center;
   }
   
+  .flights-text-hr {
+    width: 95%;
+  }
 
   .flights-text-hr h1 {
     font-size: 60px;
   }
   
   .flights-text-hr hr {
-    border: 2px solid black;
+    border: 2px solid white;
     margin: 10px 0 10px 
   }
 
-
-
   .flight-container {
-    width: 100%;
+    width: 95%;
     height: 300px;
-    border: 3px solid green;
+    border: 2px solid rgb(236, 233, 233);
+    border-radius: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    padding: 0 100px 0 100px;
+    padding: 0 60px 0 60px;
+    margin-top: 30px;
   }
 
   .flight-container-image-company {
     width: 180px;
     height: 216px;
-    border: 1px solid green;
     display: flex;
     flex-direction: column;
   }
@@ -86,26 +120,78 @@
   .flight-container-image {
     width: 100%;
     height: 80%;
-    border: 1px solid purple;
+    padding: 10px;
+    border: 5px solid rgb(224, 149, 9);
+    background-color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
   }
   
   .flight-container-company {
     width: 100%;
     height: 20%;
-    border: 1px solid yellow;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; 
+    white-space: nowrap; 
+  }
+  
+  .flight-container-company p {
+    font-size: 30px;
+    text-overflow: ellipsis; 
+    overflow: hidden; 
+    white-space: nowrap; 
+    max-width: 100%;
   }
 
   .flight-container-information {
-    width: 750px;
+    width: 850px;
     height: 216px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
-    border: 1px solid purple;
+    grid-template-rows: 1fr 1fr 1fr;
   }
 
   .flight-container-information-box {
     width: 100%;
     height: 100%;
-    border: 1px solid red;
+    display: flex;
+    justify-content: flex-start;
+    padding: 0 15px 0 15px;
+    align-items: center;
+    box-sizing: border-box;
+    line-height: 1.2;
+  }
+
+  .flight-container-information-box p {
+    font-size: 20px;
+  }
+
+  .flight-container-information-box img {
+    height: 30px;
+    width: 30px;
+    margin-right: 10px;
+    object-fit: contain;
+  }
+
+  .flight-container-button {
+    height: 40px;
+    width: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid black;
+    border-radius: 8px;
+    background-color: rgb(224, 149, 9);
+    margin-left: 20px;
+  }
+
+  .flight-container-button a {
+    font-size: 20px;
+    font-weight: 500;
+    text-decoration: none;
+    color: white;
   }

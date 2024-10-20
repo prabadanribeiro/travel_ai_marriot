@@ -93,6 +93,7 @@ export default function Home() {
           endCity: response.data.endCity,
           startingDate: response.data.startingDate,
           endingDate: response.data.endingDate,
+          flights: response.data.flights,
         },
       });
     } catch (error) {
@@ -117,6 +118,9 @@ export default function Home() {
   return (
     <>
       <div className='home-container'>
+        <div className='home-message'>
+          <h1>CONNECTING YOU TO TRAVEL AROUND THE WORLD</h1>
+        </div>
         {/* {Switches Between Backgrounds} */}
         {backgroundImages.map((image, index) => (
           <div
@@ -132,35 +136,46 @@ export default function Home() {
               {/* {Imports Cities.jsx} */}
               <Cities onCitiesSelect={onCitiesSelect} />
             </div>
+
             <div className='search-dates'>
               <div className='starting-date' onClick={calendarStarting}>
-                {/* {Formats the date} */}
-                {startingDate ? (
-                  <h1>{startingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h1>
-                ) : (
-                  <h1>Pick a start date</h1>
-                )}
+                <div className='dates-text'>
+                  <h2>Starting Date</h2>
+                </div>
+                <div className='date-chosen'>
+                  {/* Formats the date */}
+                  {startingDate ? (
+                    <h1>{startingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h1>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
               <div className='ending-date' onClick={calendarEnding}>
-                {/* {Formats the date} */}
-                {endingDate ? (
-                  <h1>{endingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h1>
-                ) : (
-                  <h1>Pick an end date</h1>
-                )}
+                <div className='dates-text'>
+                  <h2>Return Date</h2>
+                </div>
+                <div className='date-chosen'>
+                  {/* {Formats the date} */}
+                  {endingDate ? (
+                    <h1>{endingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h1>
+                  ) : (
+                    <></>
+                  )}
+                </div>
               </div>
             </div>
+            {/* {Send button for Flask} */}
+            <div className='home-button-container'>
+              <button
+                className='send-city-button'
+                onClick={handleSendCities}
+                disabled={!selectedStartCity || !selectedEndCity || !startingDate || !endingDate}
+              >
+                Send to Backend
+              </button>
+            </div>
           </div>
-
-          {/* {Send button for Flask} */}
-          <button
-            className='send-city-button'
-            onClick={handleSendCities}
-            disabled={!selectedStartCity || !selectedEndCity || !startingDate || !endingDate}
-          >
-            Send to Backend
-          </button>
-
           {/* {Displays calendar when appropriate} */}
           {calendarVisibility && (
             <div className='calendar-container'>
