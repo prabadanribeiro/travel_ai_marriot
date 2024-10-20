@@ -1,5 +1,5 @@
 from serpapi import GoogleSearch
-serp_api_key = '2dfd45d31b0940e834ab7b7ed379b19ec6bf429a423d4c86eaf056cdef83ece7'
+serp_api_key = 'fa91ac0fdc808e58ae120682ea9945b512d6f9666ea8817f5b0e608665b156ca'
 def get_picture(name, vicinity):
     params = {
         "engine": "google_images",
@@ -14,7 +14,7 @@ def get_picture(name, vicinity):
     except (IndexError, KeyError):
         print(results)
         return None
-print(get_picture('W Barcelona', 'Barcelona'))
+
 
 def get_description(name, vicinity):
     params = {

@@ -18,7 +18,6 @@ const Cities = ({ onCitiesSelect }) => {
     fetchAccessToken();
   }, []);
 
-  // Fetch access token from Amadeus API
   const fetchAccessToken = async () => {
     try {
       const response = await axios.post(
@@ -40,7 +39,6 @@ const Cities = ({ onCitiesSelect }) => {
     }
   };
 
-  // Fetch cities from Amadeus API for starting point
   const fetchCitiesStart = async (query) => {
     if (!accessToken) return; 
     setLoadingStart(true);
@@ -57,7 +55,7 @@ const Cities = ({ onCitiesSelect }) => {
           },
         }
       );
-      setCitiesStart(response.data.data); // Set the city list for starting point
+      setCitiesStart(response.data.data); 
     } catch (error) {
       console.error('Error fetching cities for start:', error);
     } finally {
@@ -65,7 +63,6 @@ const Cities = ({ onCitiesSelect }) => {
     }
   };
 
-  // Fetch cities from Amadeus API for end point
   const fetchCitiesEnd = async (query) => {
     if (!accessToken) return;
     setLoadingEnd(true);
@@ -90,17 +87,14 @@ const Cities = ({ onCitiesSelect }) => {
     }
   };
 
-  // Handle input change and fetch cities for starting point
   const handleInputStartChange = (e) => {
     const query = e.target.value;
     setInputStart(query);
 
-    // If the user modifies or deletes the input, reset selectedStartCity
     if (selectedStartCity && query !== selectedStartCity.name) {
       setSelectedStartCity(null);
     }
 
-    // Only fetch cities if input length > 2
     if (query.length > 2) {
       fetchCitiesStart(query);
     } else {
@@ -108,17 +102,14 @@ const Cities = ({ onCitiesSelect }) => {
     }
   };
 
-  // Handle input change and fetch cities for end point
   const handleInputEndChange = (e) => {
     const query = e.target.value;
     setInputEnd(query);
 
-    // If the user modifies or deletes the input, reset selectedEndCity
     if (selectedEndCity && query !== selectedEndCity.name) {
       setSelectedEndCity(null);
     }
 
-    // Only fetch cities if input length > 2
     if (query.length > 2) {
       fetchCitiesEnd(query);
     } else {
@@ -126,7 +117,6 @@ const Cities = ({ onCitiesSelect }) => {
     }
   };
 
-  // Handle city selection for starting point
   const handleStartCitySelect = (city) => {
     setSelectedStartCity(city); 
     setInputStart(city.name); 
@@ -136,7 +126,6 @@ const Cities = ({ onCitiesSelect }) => {
     }
   };
 
-  // Handle city selection for end point
   const handleEndCitySelect = (city) => {
     setSelectedEndCity(city);
     setInputEnd(city.name);
@@ -148,65 +137,45 @@ const Cities = ({ onCitiesSelect }) => {
 
   return (
     <>
-      <div className='cities-container'>
-        <div className='destination-text'>
-          <h4>Starting Point</h4>
-          <div className='city-search-container'>
-            <div className='input-container'>
-              <input
-                type="text"
-                value={inputStart}
-                onChange={handleInputStartChange}
-                placeholder="Enter a Starting City"
-              />
-            </div>
-            <div className='cities-list'>
-              {loadingStart && <p>Loading...</p>}
-              <ul>
-                {citiesStart.map((city) => (
-                  <li
-                    key={city.id}
-                    onClick={() => handleStartCitySelect(city)}
-                    className="city-item"
-                  >
-                    {city.name}, {city.address.countryName}
-                  </li>
-                ))}
-              </ul>
-            </div>
+      <div className="flight-search-bar">
+        <div className="location-field">
+          <input
+            type="text"
+            value={inputStart}
+            onChange={handleInputStartChange}
+            placeholder="Starting Point..."
+          />
+          <div className="cities-list">
+            {loadingStart && <p>Loading...</p>}
+            <ul>
+              {citiesStart.map((city) => (
+                <li key={city.id} onClick={() => handleStartCitySelect(city)} className="city-item">
+                  {city.name}, {city.address.countryName}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-    
-        <div className='destination-text'>
-          <h4>Destination</h4>
-          <div className='city-search-container'>
-            {/* Input for end city */}
-            <div className='input-container'>
-              <input
-                type="text"
-                value={inputEnd}
-                onChange={handleInputEndChange}
-                placeholder="Enter an End City"
-              />
-            </div>
-            <div className='cities-list'>
-              {loadingEnd && <p>Loading...</p>}
-              <ul>
-                {citiesEnd.map((city) => (
-                  <li
-                    key={city.id}
-                    onClick={() => handleEndCitySelect(city)}
-                    className="city-item"
-                  >
-                    {city.name}, {city.address.countryName}
-                  </li>
-                ))}
-              </ul>
-            </div>
+
+        <div className="location-field">
+          <input
+            type="text"
+            value={inputEnd}
+            onChange={handleInputEndChange}
+            placeholder="Destination..."
+          />
+          <div className="cities-list">
+            {loadingEnd && <p>Loading...</p>}
+            <ul>
+              {citiesEnd.map((city) => (
+                <li style={{fontFamily:'Poppins, sans-serif'}} key={city.id} onClick={() => handleEndCitySelect(city)} className="city-item">
+                  {city.name}, {city.address.countryName}
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </div>
-        
     </>
   );
 };

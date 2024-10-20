@@ -2,13 +2,14 @@ from flask import Flask, request, jsonify, send_from_directory
 from flask_cors import CORS
 from get_flight_data import get_flight_data
 from get_hotel_data import get_hotel_data
+from get_attractions import create_map
 from serpapi import GoogleSearch
 from amadeus import Client, Location, ResponseError
 import requests
 import os, json, csv
 
 app = Flask(__name__)
-CORS(app)
+CORS(app, resources={r"/*": {"origins": "http://localhost:3000"}})
 
 @app.route('/cities-dates', methods=['POST'])
 def cities_dates():
@@ -47,6 +48,20 @@ def get_hotels():
 @app.route('/map')
 def serve_map():
     return send_from_directory('static', 'map.html')
+
+@app.route('/send-map-data', methods=['POST'])
+def send_map_data():
+    longitude = request.json.get('longitude') 
+    latitude = request.json.get('latitude')
+    city = request.json.get('city')
+
+    if not longitude or not latitude:
+        return jsonify({"error": "Missing longitude or latitude"}), 400
+
+    create_map(latitude, longitude, city)
+
+    return jsonify({'message': 'Map data successfully processed'}), 200
+
 
 if __name__ == '__main__':
     app.run(debug=True)

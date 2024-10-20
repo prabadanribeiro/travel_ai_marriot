@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
 import Cities from './Cities';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
+import { useNavigate } from 'react-router-dom'; 
 import 'react-calendar/dist/Calendar.css';
 import './styles/Home.css';
 import backgroundImage1 from '../src/assets/images/home-backgrounds/background-image1.jpeg';
@@ -22,7 +22,7 @@ export default function Home() {
   const [currentBackground, setCurrentBackground] = useState(0);
   const [fade, setFade] = useState(true);
 
-  const navigate = useNavigate(); // Initialize the useNavigate hook for redirection
+  const navigate = useNavigate(); 
 
   // Array of background image URLs
   const backgroundImages = [
@@ -69,13 +69,11 @@ export default function Home() {
       return;
     }
 
-    // Formats for Flask
     const formattedStartingDate = startingDate.toISOString().slice(0, 10);
     const formattedEndingDate = endingDate.toISOString().slice(0, 10);
     const formattedStartingCity = selectedStartCity.name;
     const formattedEndCity = selectedEndCity.name;
 
-    // Sends post request
     try {
       const response = await axios.post('http://127.0.0.1:5000/cities-dates', {
         startCity: formattedStartingCity,
@@ -86,7 +84,6 @@ export default function Home() {
 
       console.log('Cities and dates sent to Flask:', response.data);
 
-      // Navigate to the Flights component after successfully sending data and pass the data in state
       navigate('/flights', {
         state: {
           startCity: response.data.startCity,
@@ -105,14 +102,13 @@ export default function Home() {
   useEffect(() => {
     const interval = setInterval(() => {
       setFade(false);
-
       setTimeout(() => {
         setCurrentBackground((prevBackground) => (prevBackground + 1) % backgroundImages.length);
         setFade(true);
       }, 3000);
     }, 10000);
 
-    return () => clearInterval(interval); // cleanup on unmount
+    return () => clearInterval(interval);
   }, [backgroundImages.length]);
 
   return (
@@ -121,7 +117,7 @@ export default function Home() {
         <div className='home-message'>
           <h1>CONNECTING YOU TO TRAVEL AROUND THE WORLD</h1>
         </div>
-        {/* {Switches Between Backgrounds} */}
+        {/* Background image switch */}
         {backgroundImages.map((image, index) => (
           <div
             key={index}
@@ -129,54 +125,35 @@ export default function Home() {
             style={{ backgroundImage: `url(${image})` }}
           />
         ))}
-
+      </div>
+      <div className='center-search'>
+        <div className='begin-text'>
+          <h1>Begin Your Travel Journey</h1>
+        </div>
         <div className='action-container'>
-          <div className='search-container'>
-            <div className='search-location'>
-              {/* {Imports Cities.jsx} */}
-              <Cities onCitiesSelect={onCitiesSelect} />
-            </div>
-
-            <div className='search-dates'>
-              <div className='starting-date' onClick={calendarStarting}>
-                <div className='dates-text'>
-                  <h2>Starting Date</h2>
-                </div>
-                <div className='date-chosen'>
-                  {/* Formats the date */}
-                  {startingDate ? (
-                    <h1>{startingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h1>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-              <div className='ending-date' onClick={calendarEnding}>
-                <div className='dates-text'>
-                  <h2>Return Date</h2>
-                </div>
-                <div className='date-chosen'>
-                  {/* {Formats the date} */}
-                  {endingDate ? (
-                    <h1>{endingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</h1>
-                  ) : (
-                    <></>
-                  )}
-                </div>
-              </div>
-            </div>
-            {/* {Send button for Flask} */}
-            <div className='home-button-container'>
-              <button
-                className='send-city-button'
-                onClick={handleSendCities}
-                disabled={!selectedStartCity || !selectedEndCity || !startingDate || !endingDate}
-              >
-                Send to Backend
-              </button>
-            </div>
+          <div className="flight-search-bar">  
+            <div className="location-field">  
+              <Cities onCitiesSelect={onCitiesSelect} /> 
+            </div>  
+            <div className="date-field" onClick={calendarStarting}>  
+              <input
+                type="text"
+                value={startingDate ? startingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}
+                placeholder="From?" 
+                readOnly 
+              />
+            </div>  
+            <div className="date-field" onClick={calendarEnding}>  
+              <input
+                type="text"
+                value={endingDate ? endingDate.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : ''}
+                placeholder="To?" 
+                readOnly 
+              />
+            </div>  
+            <button className="find-deals-btn" onClick={handleSendCities}><strong>Find Deals</strong></button>  
           </div>
-          {/* {Displays calendar when appropriate} */}
+
           {calendarVisibility && (
             <div className='calendar-container'>
               <Calendar onChange={onChange} value={starting ? startingDate : endingDate} />
@@ -184,6 +161,7 @@ export default function Home() {
           )}
         </div>
       </div>
+      
     </>
   );
 }
