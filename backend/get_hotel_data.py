@@ -1,5 +1,6 @@
 from serpapi import GoogleSearch
 from get_pic_desc import get_picture
+# 
 def get_hotel_data(city_name, check_in_date, check_out_date):
     params = {
     "engine": "google_hotels",
