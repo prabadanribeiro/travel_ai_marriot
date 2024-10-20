@@ -12,7 +12,7 @@ export default function Flights() {
   const location = useLocation();
   const navigate = useNavigate(); 
 
-  const { startCity, endCity, startingDate, endingDate, flights } = location.state || {};
+  const { startCity, endCity, endCountry, startingDate, endingDate, flights } = location.state || {};
   console.log(location.state);
 
   // State for storing hotel data
@@ -26,6 +26,7 @@ export default function Flights() {
       const response = await axios.get('http://127.0.0.1:5000/get-hotels', {
         params: {
           city: endCity,
+          country: endCountry,
           check_in: startingDate,
           check_out: endingDate,
         },

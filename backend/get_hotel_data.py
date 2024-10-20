@@ -1,10 +1,10 @@
 from serpapi import GoogleSearch
 from get_pic_desc import get_picture
-# 
-def get_hotel_data(city_name, check_in_date, check_out_date):
+
+def get_hotel_data(city_name, country, check_in_date, check_out_date):
     params = {
     "engine": "google_hotels",
-    "q": city_name,
+    "q": f'{city_name} at {country}',
     "check_in_date": check_in_date,
     "check_out_date": check_out_date,
     "brands" : 46,
