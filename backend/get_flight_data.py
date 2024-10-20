@@ -61,4 +61,3 @@ def get_flight_data(origin, endpoint, departure, arrival):
         'flight_link' : link['search_metadata']['google_flights_url']
         }
     return flights
-      
