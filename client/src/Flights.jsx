@@ -10,19 +10,22 @@ import moneyIMG from './assets/images/whitemoney2.png';
 
 export default function Flights() {
   const location = useLocation();
-  const navigate = useNavigate(); // useNavigate to programmatically navigate
+  const navigate = useNavigate(); 
 
   const { startCity, endCity, startingDate, endingDate, flights } = location.state || {};
+  console.log(location.state);
 
   // State for storing hotel data
   const [hotels, setHotels] = useState(null);
+  const [loading, setLoading] = useState(false); 
 
   // Function to handle the "Skip to Hotels" click
   const handleSkipToHotels = async () => {
+    setLoading(true); 
     try {
       const response = await axios.get('http://127.0.0.1:5000/get-hotels', {
         params: {
-          city: endCity, // Fetch hotels at the destination city
+          city: endCity,
           check_in: startingDate,
           check_out: endingDate,
         },
@@ -41,6 +44,8 @@ export default function Flights() {
       });
     } catch (error) {
       console.error('Error fetching hotel data:', error);
+    } finally {
+      setLoading(false); // Stop the loading spinner once the request is complete
     }
   };
 
@@ -65,10 +70,10 @@ export default function Flights() {
     width: '100%',
     height: '100%',
     background:
-      'radial-gradient(rgb(200, 160, 0) 40%, transparent 60%) -620px -180px no-repeat, ' +  // Darker yellow-orange
-      'radial-gradient(rgb(240, 140, 0) 33%, transparent 67%) -120px -24px no-repeat, ' +  // Darker orange
-      'radial-gradient(rgb(210, 110, 0) 40%, transparent 70%) -470px 150px no-repeat, ' +  // Deeper orange
-      'hsl(30, 100%, 45%)',  // Darkened orange using HSL
+      'radial-gradient(rgb(200, 160, 0) 40%, transparent 60%) -620px -180px no-repeat, ' +
+      'radial-gradient(rgb(240, 140, 0) 33%, transparent 67%) -120px -24px no-repeat, ' +  
+      'radial-gradient(rgb(210, 110, 0) 40%, transparent 70%) -470px 150px no-repeat, ' + 
+      'hsl(30, 100%, 45%)',  
     zIndex: '-1',
   };
 
@@ -86,9 +91,23 @@ export default function Flights() {
             </Link>
           </div>
           <div className='skip-button'>
-            {/* Handle the click for fetching hotels */}
-            <button onClick={handleSkipToHotels}>
-              <h1>Skip to Hotels</h1>
+            <button
+              style={{ width: '100%', height: '100%', borderRadius: '7px', backgroundColor: 'orange', display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+              onClick={handleSkipToHotels}
+              disabled={loading}  
+            >
+              {loading ? (
+                <div className="spinner" style={{
+                  border: "2px solid white",
+                  borderTop: "2px solid transparent",
+                  borderRadius: "50%",
+                  width: "16px",
+                  height: "16px",
+                  animation: "spin 1s linear infinite"
+                }}></div>
+              ) : (
+                <h1>Go to Hotels</h1>
+              )}
             </button>
           </div>
         </div>
@@ -107,7 +126,6 @@ export default function Flights() {
             <div key={index} className="flight-container">
               <div className='flight-container-image-company'>
                 <div className='flight-container-image'>
-                  {/* Airline logo */}
                   <img
                     src={flights[flightKey].airline_logo}
                     alt={`${flights[flightKey].airline_name} logo`}
@@ -162,6 +180,15 @@ export default function Flights() {
           ))}
         </div>
       </div>
+
+      <style>
+        {`
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        `}
+      </style>
     </>
   );
 }

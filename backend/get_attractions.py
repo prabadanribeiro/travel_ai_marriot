@@ -51,11 +51,15 @@ def get_attractions_around_hotel(latitude=40.712776, longitude=-74.005974):
 
 
 
-def create_map(lat=40.712776, lon=-74.005974):
+def create_map(lat=40.712776, lon=-74.005974, hotel_name = "Marriott"):
     map_center = [lat, lon]
-    m = folium.Map(location=map_center, zoom_start=12)
+    m = folium.Map(location=map_center, zoom_start=15)
     restaurants, attractions , malls = get_attractions_around_hotel(lat, lon)
-    print(malls)
+    folium.Marker(
+        location=[lat, lon],
+        popup=folium.Popup(f"{hotel_name}", max_width=300),
+        icon=folium.Icon(icon='home', color='purple')  # Home icon for the location
+    ).add_to(m)
     # Function to add markers to the map
     def add_markers(places, place_type):
         for place in places:
@@ -67,11 +71,10 @@ def create_map(lat=40.712776, lon=-74.005974):
                 icon = folium.Icon(icon='cutlery', color='blue')  # Cutlery icon for restaurants
             elif place_type == 'Shopping Center':
                 icon = folium.Icon(icon='shopping-cart', color='green')  # Shopping cart icon for shopping centers
-            picture = get_picture(name, places[place])
+            picture = '' #get_picture(name, places[place])
             popup_content = f"""
                 <div style="background-color: #f9f9f9; border: 2px solid #007bff; border-radius: 5px; padding: 10px;">
                 <h4 style="color: #007bff;">{name}</h4>
-                <p style="margin: 5px 0;">Type: <strong>{place_type}</strong></p>
                 {picture}
             </div>
         """
@@ -87,5 +90,5 @@ def create_map(lat=40.712776, lon=-74.005974):
     add_markers(malls, 'Shopping Center')
 
     # Save the map to an HTML file
-    m.save('map.html')
+    m.save('static/map.html')
 create_map()

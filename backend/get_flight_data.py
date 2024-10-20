@@ -28,7 +28,7 @@ def get_flight_data(origin, endpoint, departure, arrival):
     origin = get_airport_code(origin)
     endpoint = get_airport_code(endpoint)
     params = {
-    'api_key' : 'c141450bc8fca73781cc5ba783d313968e6e3eb8479fa81428a2b761a7a25e68',
+    'api_key' : 'fa91ac0fdc808e58ae120682ea9945b512d6f9666ea8817f5b0e608665b156ca',
     'engine' : 'google_flights',
     'stops' : 0, #only non stop flights#
     'departure_id' : origin,
@@ -49,7 +49,7 @@ def get_flight_data(origin, endpoint, departure, arrival):
         'currency': "USD",
         'hl': "en",
         'booking_token': best_flights[i]['departure_token'],
-        'api_key': "c141450bc8fca73781cc5ba783d313968e6e3eb8479fa81428a2b761a7a25e68"
+        'api_key': "fa91ac0fdc808e58ae120682ea9945b512d6f9666ea8817f5b0e608665b156ca"
         }
         link = GoogleSearch(params).get_dict()
         flights['flight' + str(i+1)] = {
