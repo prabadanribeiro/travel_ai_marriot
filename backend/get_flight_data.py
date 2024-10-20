@@ -3,6 +3,7 @@ from amadeus import Client, Location, ResponseError
 import requests
 import os, json, csv
 
+#function to the airport's IATA code to use in flight search#
 def get_airport_code(city_name):
     amadeus = Client(
         client_id='fIZvU3nGGUfVBNYkKKZMXAkMUuju6K66',
@@ -18,25 +19,27 @@ def get_airport_code(city_name):
         final_list = []
         for index in range(len(airports)):
             final_list.append(airports[index]['iataCode'])
-        return ','.join(final_list)
+        return ','.join(final_list) #returns a string of IATA codes seperated by ","#
     except ResponseError as error:
         return error
 
+#function to get the flight data according to length of trip and cities#
 def get_flight_data(origin, endpoint, departure, arrival):
     origin = get_airport_code(origin)
     endpoint = get_airport_code(endpoint)
     params = {
     'api_key' : '2042f1270c13df5555808466cd31ba26f137362658fa1c8a982eb50cf31a3073',
     'engine' : 'google_flights',
-    'stops' : 0,
+    'stops' : 0, #only non stop flights#
     'departure_id' : origin,
     'arrival_id' : endpoint,
     'outbound_date' : departure,
     'return_date' : arrival
     }
-    best_flights = GoogleSearch(params).get_dict()['best_flights']
+    best_flights = GoogleSearch(params).get_dict()['best_flights'] #google's machine learning sorts the best flights#
     flights = {}
     for i in range(len(best_flights)):
+        #following gets the booking page for the flight#
         params = {
         'engine' : "google_flights",
         'departure_id' : origin,
@@ -60,4 +63,6 @@ def get_flight_data(origin, endpoint, departure, arrival):
         'price' : best_flights[i]['price'],
         'flight_link' : link['search_metadata']['google_flights_url']
         }
-    return flights
+        
+    return flights #returns a dictionary with the above information#
+      
